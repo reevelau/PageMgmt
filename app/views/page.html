@@ -1,0 +1,14 @@
+<div>
+  <h1>Select a Page</h1>
+
+  <div class="row">
+    <div class="col-md-4" style="cursor:pointer;" ng-repeat="account in accounts" ng-click="goTo(account.id)">
+      <div class="thumbnail">
+        <img ng-src="{{account.picUrl}}"></img>
+        <div class="caption">
+          <h1>{{account.name}}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

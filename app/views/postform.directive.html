@@ -1,0 +1,10 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <form>
+      <textarea class="form-control" rows="2" ng-model="vm.post.message"></textarea>
+      Type: <input type="radio" ng-model="vm.post.published" ng-value="true" /> regular
+      <input type="radio" ng-model="vm.post.published" ng-value="false"/> unpublished
+      <input type="submit" class="btn pull-right" ng-click="vm.submitPost()" ng-disable="vm.pageAccessToken === ''"></input>
+    </form>
+  </div>
+</div>

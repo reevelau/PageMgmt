@@ -1,0 +1,18 @@
+<div class="jumbotron">
+  <h1>Welcome</h1>
+  <h2>Facebook Page Management</h2>
+
+
+
+  <div ng-switch="loggedin">
+    <fb:login-button scope="manage_pages,publish_pages,read_insights,email" onlogin=""
+    data-size="xlarge" ng-switch-when="false">
+    </fb:login-button>
+
+    <h2 ng-switch-when="true" ng-click="goToPageSelection()" style="cursor:pointer;">{{welcomeMsg}}</h2>
+  </div>
+
+  <!--
+  <button type="button" class="btn btn-primary" ng-click="fbLogout()">Logout</button>
+  -->
+</div>

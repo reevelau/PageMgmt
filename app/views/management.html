@@ -1,0 +1,83 @@
+<div>
+  <h1>Management</h1>
+
+
+  <postform page-id="pageId" post-created="postCreatedCallback(postId)"/>
+
+
+  <div>
+    <ul class="list-group">
+      <li ng-repeat="post in posts" class="row list-group-item" id="{{post.id}}">
+        <div class="col-md-12">
+          <a href="https://www.facebook.com/{{post.id}}" target="_blank">{{post.details.displayTitle}}</a>
+          <br/>
+          <pre ng-if="post.details.display_attachments">{{post.details.attachments}}</pre>
+
+          <div ng-switch on="post.details.type">
+            <div id="diplay-photo" ng-switch-when="photo">
+              <div class="thumbnail row">
+                <div class="col-xs-6 col-md-3" ng-repeat="tn in post.details.photoContent.thumbnails">
+                  <a ng-href="tn.url" class="thumbnail" target="_blank">
+                    <img ng-src="{{tn.imgSrc}}">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div id="display-video" ng-switch-when="video">
+              <div class="thumbnail row">
+                <a class="col-md-4" href="{{post.details.videoContent.url}}" target="_blank" ng-if="post.details.videoContent.withImg">
+                  <img ng-src="{{post.details.videoContent.imgSrc}}"></img>
+                </a>
+                <div class="caption col-md-8">
+                  <h3>{{post.details.videoContent.title}}</h3>
+                  {{post.details.videoContent.description}}
+                </div>
+              </div>
+            </div>
+            <div id="display-link" ng-switch-when="link">
+              <div class="thumbnail row">
+                <a class="col-md-4" href="{{post.details.linkContent.url}}" target="_blank" ng-if="post.details.linkContent.withImg">
+                  <img ng-src="{{post.details.linkContent.imgSrc}}"></img>
+                </a>
+                <div class="caption col-md-8">
+                  <h3>{{post.details.linkContent.title}}</h3>
+                  {{post.details.linkContent.description}}
+                </div>
+              </div>
+            </div>
+            <div id="display-default" ng-switch-default>
+            </div>
+          </div>
+
+          <br/>
+          <div class="row">
+            <span class="label label-default">{{post.details.created_time| date:'MM/dd/yyyy @ h:mma'}}</span>
+            <span class="label label-info">{{post.details.type}}</span>
+            <span class="label label-warning">{{post.post_impressions_unique}}</span>
+            <span class="label label-success" ng-if="post.details.is_published">published</span>
+            <span class="label label-danger" ng-if="!post.details.is_published">unpublished</span>
+          </div>
+        </div>
+
+      </li>
+    </ul>
+    <div class="row" id="navigate">
+      <!--
+      <div class="col-md-1">
+        <a ng-click="goPrevious()">Previous</a>
+      </div>
+      <div class="col-md-10"></div>
+      <div class="col-md-1">
+        <a ng-click="goNext()">Next</a>
+      </div>
+      -->
+
+      <nav>
+        <ul class="pager">
+          <li><a ng-click="goPrevious()">Previous</a></li>
+          <li><a ng-click="goNext()">Next</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
