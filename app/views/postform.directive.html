@@ -1,10 +1,151 @@
+<div>
+  <h1>{{vm.form_action_url}}</h1>
+</div>
 <div class="panel panel-default">
   <div class="panel-body">
-    <form>
-      <textarea class="form-control" rows="2" ng-model="vm.post.message"></textarea>
-      Type: <input type="radio" ng-model="vm.post.published" ng-value="true" /> regular
-      <input type="radio" ng-model="vm.post.published" ng-value="false"/> unpublished
-      <input type="submit" class="btn pull-right" ng-click="vm.submitPost()" ng-disable="vm.pageAccessToken === ''"></input>
+    <ul class="nav nav-tabs nav-justified">
+      <li role="presentation" ng-class="{ 'active' : vm.postType == 'status' }"><a ng-click="vm.setPostType('status')">Status</a></li>
+      <li role="presentation" ng-class="{ 'active' : vm.postType == 'link' }"><a ng-click="vm.setPostType('link')">Link</a></li>
+      <li role="presentation" ng-class="{ 'active' : vm.postType == 'video' }"><a ng-click="vm.setPostType('video')">Video</a></li>
+      <!--
+      <li role="presentation" ng-class="{ 'active' : vm.postType == 'carousel' }"><a ng-click="vm.setPostType('carousel')">Carousel</a></li>
+      -->
+      <li role="presentation" ng-class="{ 'active' : vm.postType == 'photo' }"><a ng-click="vm.setPostType('photo')">Photo</a><li>
+    </ul>
+  </div>
+
+  <div class="panel-body">
+    <form class="form-horizontal"
+      >
+
+      <div class="form-group" >
+        <label class="col-sm-2 control-label">
+          Post text
+        </label>
+        <div class="col-sm-10">
+          <textarea class="form-control" rows="2" name="message" ng-model="vm.post.message" required></textarea>
+        </div>
+      </div>
+
+
+      <div ng-switch="vm.postType">
+
+        <div ng-switch-when="status">
+            <!--No known additional form element-->
+        </div>
+
+        <div ng-switch-when="link">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              URL
+            </label>
+            <div class="col-sm-10">
+              <input type="url" name="link" class="form-control" ng-model="vm.post.linkUrl" placeholder="URL" required>
+            </div>
+          </div>
+        </div>
+
+        <div ng-switch-when="video">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Video URL
+            </label>
+            <div class="col-sm-10">
+              <input type="url" name="source" class="form-control" ng-model="vm.post.videoUrl" placeholder="URL to a video file" required>
+            </div>
+          </div>
+        </div>
+
+        <div ng-switch-when="carousel">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              URL
+            </label>
+            <div class="col-sm-10">
+              <input type="url" class="form-control" placeholder="URL">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Card 1
+            </label>
+
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Headline
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Headline">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Picture
+            </label>
+            <div class="col-sm-10">
+              <input type="file" name="source" class="form-control" value="Select Image">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Card 2
+            </label>
+
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Headline
+            </label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" placeholder="Headline">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Picture
+            </label>
+            <div class="col-sm-10">
+              <input type="button" class="form-control" value="Select Image">
+            </div>
+          </div>
+
+        </div>
+
+        <div ng-switch-when="photo">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Photo URL
+            </label>
+            <div class="col-sm-10">
+              <input type="url" name="source" class="form-control" ng-model="vm.post.photoUrl" placeholder="URL to a file" required>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">
+          Publish type
+        </label>
+        <div class="col-sm-10">
+          <label class="radio-inline">
+            <input type="radio" name="published" value="true" ng-model="vm.post.published" ng-value="true"/> Regular
+          </label>
+          <label class="radio-inline">
+            <input type="radio" name="published" value="false" ng-model="vm.post.published" ng-value="false"/> Unpublished
+          </label>
+        </div>
+      </div>
+
+
+      <input type="submit" class="btn pull-right"  ng-disable="vm.pageAccessToken === ''" ng-click="vm.submitPost()"></input>
     </form>
   </div>
 </div>

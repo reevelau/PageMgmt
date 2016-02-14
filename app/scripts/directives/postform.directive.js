@@ -31,14 +31,28 @@
 
     /* @ngInject */
     function Controller(fb) {
+
+
         var vm = this;
+
+        var FEED_POSTING_PATH = '/' + vm.pageId + '/feed';
+        var PHOTOS_POSTING_PATH = '/' + vm.pageId + '/photos';
+        var VIDEOS_POSTING_PATH = '/' + vm.pageId + '/videos';
+
+        vm.postType = 'status'; // {'status','link', 'video', 'carousel', 'photo'}
+        vm.setPostType = function(type){
+          vm.postType = type;
+        };
+
         vm.cleanPost = {
                     message: '',
-                    published:true
+                    published: false,
                   };
 
         vm.post = angular.copy(vm.cleanPost);
         vm.pageAccessToken = '';
+
+        vm.form_action_url = 'https://graph.facebook.com/v2.5/' + vm.pageId +'/feed';
 
         activate();
 
@@ -54,24 +68,43 @@
         }
 
         console.log('postform pageId: ' + vm.pageId);
+
+
         vm.submitPost = function(){
           if(vm.pageAccessToken === ''){
             console.log('page access token not available');
             return;
           }
 
-          console.dir(vm.post);
+          var postingPath = FEED_POSTING_PATH;
+          var postingObj = {};
+          postingObj.access_token = vm.pageAccessToken;
+          switch (vm.postType) {
+            case 'status':
+              postingObj.message = vm.post.message;
+              break;
+            case 'link':
+              postingObj.message = vm.post.message;
+              postingObj.link = vm.post.linkUrl;
+              break;
 
+            case 'photo':
+              postingPath = PHOTOS_POSTING_PATH;
+              postingObj.message = vm.post.message;
+              postingObj.url = vm.post.photoUrl;
+              break;
+            case 'video':
+              postingPath = VIDEOS_POSTING_PATH;
+              postingObj.title = vm.post.message;
+              postingObj.file_url = vm.post.videoUrl;
+              break;
+            default:
 
+          }
 
-
-          fb.api('/' + vm.pageId + '/feed',
+          fb.api(postingPath,
               'POST',
-              {
-                message: vm.post.message,
-                published: vm.post.published,
-                access_token: vm.pageAccessToken
-              }).then(function(resp){
+              postingObj).then(function(resp){
                 console.log('post return');
                 console.dir(resp);
                 vm.post = angular.copy(vm.cleanPost);
