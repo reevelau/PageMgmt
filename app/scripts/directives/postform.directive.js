@@ -82,21 +82,25 @@
           switch (vm.postType) {
             case 'status':
               postingObj.message = vm.post.message;
+              postingObj.published = vm.post.published;
               break;
             case 'link':
               postingObj.message = vm.post.message;
               postingObj.link = vm.post.linkUrl;
+              postingObj.published = vm.post.published;
               break;
 
             case 'photo':
               postingPath = PHOTOS_POSTING_PATH;
               postingObj.message = vm.post.message;
               postingObj.url = vm.post.photoUrl;
+              postingObj.published = vm.post.published;
               break;
             case 'video':
               postingPath = VIDEOS_POSTING_PATH;
               postingObj.title = vm.post.message;
               postingObj.file_url = vm.post.videoUrl;
+              postingObj.published = vm.post.published;
               break;
             default:
 
