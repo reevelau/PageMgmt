@@ -100,7 +100,7 @@
           ret.type = post.type;
           ret.created_time = new Date(post.created_time);
           ret.is_published = post.is_published;
-          ret.attachments = JSON.stringify(post.attachments,null,' ');
+          ret.attachments = post.attachments;
           ret.display_attachments = true;
           if(angular.isDefined(post.message) && post.message!== null){
             ret.displayTitle = post.message;
@@ -117,6 +117,9 @@
                 ret.linkContent = handleLink(att);
                 ret.display_attachments = false;
               break;
+            case 'status':
+                ret.display_attachments = false;
+              break;
             case 'photo':
                 ret.photoContent = handlePhoto(att);
                 ret.display_attachments = false;
@@ -125,9 +128,7 @@
                 ret.videoContent = handleVideo(att);
                 ret.display_attachments = false;
               break;
-            case 'status':
-                ret.display_attachments = false;
-              break;
+            case 'offer': // TODO : how to handle this?
             default:
                 ret.displayTitle = post.message;
               break;
@@ -156,15 +157,15 @@
             resp.data.forEach(function(each){
               fb.api('/' + each.id, {fields:'message,link,caption,type,actions,is_published,created_time,name,attachments'})
                 .then(function(resp){
-                  var id = _.findIndex($scope.posts,function(o){ return o.id === each.id;});
-                  $scope.posts[id].details = processPostObject(resp);
+                  var i = _.findIndex($scope.posts,function(o){ return o.id === each.id;});
+                  $scope.posts[i].details = processPostObject(resp);
                 });
 
-              fb.api('/' + each.id + '/insights/post_impressions_unique').then(function(insights){
-                var id = _.findIndex($scope.posts,function(o){ return o.id === each.id;});
-                $scope.posts[id].post_impressions_unique = insights.data[0].values[0].value;
-
-              });
+              fb.api('/' + each.id + '/insights/post_impressions_unique')
+                .then(function(insights){
+                  var i = _.findIndex($scope.posts,function(o){ return o.id === each.id;});
+                  $scope.posts[i].post_impressions_unique = insights.data[0].values[0].value;
+                });
             });
           });
         };

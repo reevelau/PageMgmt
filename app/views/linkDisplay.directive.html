@@ -1,0 +1,9 @@
+<div class="thumbnail row">
+  <a class="col-md-4" href="{{vm.details.linkContent.url}}" target="_blank" ng-if="vm.details.linkContent.withImg">
+    <img ng-src="{{vm.details.linkContent.imgSrc}}"></img>
+  </a>
+  <div class="caption col-md-8">
+    <h3>{{vm.details.linkContent.title}}</h3>
+    {{vm.details.linkContent.description}}
+  </div>
+</div>

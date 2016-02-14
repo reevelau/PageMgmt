@@ -1,9 +1,7 @@
 <div>
   <h1>Management</h1>
 
-
   <postform page-id="pageId" post-created="postCreatedCallback(postId)"/>
-
 
   <div>
     <ul class="list-group">
@@ -11,40 +9,16 @@
         <div class="col-md-12">
           <a href="https://www.facebook.com/{{post.id}}" target="_blank">{{post.details.displayTitle}}</a>
           <br/>
-          <pre ng-if="post.details.display_attachments">{{post.details.attachments}}</pre>
+          <pre ng-if="post.details.display_attachments">{{post.details.attachments | json}}</pre>
 
           <div ng-switch on="post.details.type">
-            <div id="diplay-photo" ng-switch-when="photo">
-              <div class="thumbnail row">
-                <div class="col-xs-6 col-md-3" ng-repeat="tn in post.details.photoContent.thumbnails">
-                  <a ng-href="tn.url" class="thumbnail" target="_blank">
-                    <img ng-src="{{tn.imgSrc}}">
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div id="display-video" ng-switch-when="video">
-              <div class="thumbnail row">
-                <a class="col-md-4" href="{{post.details.videoContent.url}}" target="_blank" ng-if="post.details.videoContent.withImg">
-                  <img ng-src="{{post.details.videoContent.imgSrc}}"></img>
-                </a>
-                <div class="caption col-md-8">
-                  <h3>{{post.details.videoContent.title}}</h3>
-                  {{post.details.videoContent.description}}
-                </div>
-              </div>
-            </div>
-            <div id="display-link" ng-switch-when="link">
-              <div class="thumbnail row">
-                <a class="col-md-4" href="{{post.details.linkContent.url}}" target="_blank" ng-if="post.details.linkContent.withImg">
-                  <img ng-src="{{post.details.linkContent.imgSrc}}"></img>
-                </a>
-                <div class="caption col-md-8">
-                  <h3>{{post.details.linkContent.title}}</h3>
-                  {{post.details.linkContent.description}}
-                </div>
-              </div>
-            </div>
+
+            <photo-display details="post.details" ng-switch-when="photo"/>
+
+            <video-display details="post.details" ng-switch-when="video"/>
+
+            <link-display details="post.details" ng-switch-when="link"/>
+
             <div id="display-default" ng-switch-default>
             </div>
           </div>
@@ -62,16 +36,6 @@
       </li>
     </ul>
     <div class="row" id="navigate">
-      <!--
-      <div class="col-md-1">
-        <a ng-click="goPrevious()">Previous</a>
-      </div>
-      <div class="col-md-10"></div>
-      <div class="col-md-1">
-        <a ng-click="goNext()">Next</a>
-      </div>
-      -->
-
       <nav>
         <ul class="pager">
           <li><a ng-click="goPrevious()">Previous</a></li>
