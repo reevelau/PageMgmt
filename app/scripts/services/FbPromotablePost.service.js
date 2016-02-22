@@ -2,13 +2,13 @@
     'use strict';
 
     angular
-        .module('pageMgmt')
-        .factory('factory', factory);
+        .module('pageMgmtApp')
+        .factory('FbPromotablePost', factory);
 
-    factory.$inject = ['dependencies'];
+    factory.$inject = [];
 
     /* @ngInject */
-    function factory(dependencies) {
+    function factory() {
         var service = {
             function: function
         };

@@ -5,7 +5,7 @@
         .module('pageMgmtApp')
         .controller('ManagementController', Controller);
 
-    Controller.$inject = ['$scope','$facebook','$routeParams'];
+    Controller.$inject = ['$scope','$facebook','$routeParams', '$location'];
 
     function QueryStringToJSON(searchStr) {
       var pairs = searchStr.slice(1).split('&');
@@ -20,11 +20,13 @@
     }
 
     /* @ngInject */
-    function Controller($scope, fb, routeParams) {
+    function Controller($scope, fb, routeParams, $location) {
 
         fb.getLoginStatus().then(function(resp){
-          console.log('login status');
-          console.dir(resp);
+          if(resp.status !== 'connected'){
+            // go back to root
+            $location.path('/');
+          }
         });
 
         $scope.pageId = routeParams.pageId;

@@ -52,8 +52,6 @@
         vm.post = angular.copy(vm.cleanPost);
         vm.pageAccessToken = '';
 
-        vm.form_action_url = 'https://graph.facebook.com/v2.5/' + vm.pageId +'/feed';
-
         activate();
 
         function activate() {
