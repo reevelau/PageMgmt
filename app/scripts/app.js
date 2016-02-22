@@ -19,7 +19,7 @@ angular
     'ngFacebook'
   ])
   .config(function ($routeProvider) {
-    
+
   })
   .config(function configFacebookSdk($facebookProvider){
     $facebookProvider.setAppId('821305878016174');
@@ -29,7 +29,7 @@ angular
         xfbml      : true
       });
   })
-  .run(function($rootScope){
+  .run(function($rootScope, $location){
 
 
     (function(d, s, id){
@@ -40,4 +40,34 @@ angular
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
 
+     $rootScope.$on('fb.auth.statusChange',function(authResponse){
+       console.log('fb.auth.statusChange');
+       console.dir(authResponse);
+       if(authResponse.status === 'connected'){
+         console.log('connection become connected');
+       }
+     });
+
+     $rootScope.$on('fb.auth.login',function(authResponse){
+       console.log('fb.auth.login, authResponse');
+       console.dir(authResponse);
+     });
+     $rootScope.$on('fb.auth.logout',function(authResponse){
+       console.log('fb.auth.logout, authResponse');
+       console.dir(authResponse);
+     });
+     $rootScope.$on('fb.edge.create',function(url,ele){
+       console.log('fb.edge.create, {url,ele}');
+       console.dir(url);
+       console.dir(ele);
+     });
+     $rootScope.$on('fb.edge.remove',function(url,ele){
+       console.log('fb.edge.remove, {url,ele}');
+       console.dir(url);
+       console.dir(ele);
+     });
+     $rootScope.$on('fb.message.send',function(url){
+       console.log('fb.message.send');
+       console.dir(url);
+     });
   });

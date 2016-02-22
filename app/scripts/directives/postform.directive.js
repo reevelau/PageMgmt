@@ -32,7 +32,6 @@
     /* @ngInject */
     function Controller(fb) {
 
-
         var vm = this;
 
         var FEED_POSTING_PATH = '/' + vm.pageId + '/feed';
@@ -66,7 +65,6 @@
         }
 
         console.log('postform pageId: ' + vm.pageId);
-
 
         vm.submitPost = function(){
           if(vm.pageAccessToken === ''){
@@ -107,18 +105,14 @@
           fb.api(postingPath,
               'POST',
               postingObj).then(function(resp){
-                console.log('post return');
-                console.dir(resp);
                 vm.post = angular.copy(vm.cleanPost);
                 if(angular.isDefined(vm.postCreated)){
-                  vm.postCreated({postId: 'new post id'});
+                  vm.postCreated({postId: resp.id});
                 }
               }, function failed(resp){
                 console.log('posting failed');
                 console.dir(resp);
-
               });
-
         }
     }
 })();

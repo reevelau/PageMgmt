@@ -5,15 +5,17 @@
         .module('pageMgmtApp')
         .controller('MainCtrl', Controller);
 
-    Controller.$inject = ['$scope', '$facebook', '$location', '$rootScope'];
+    Controller.$inject = ['$scope', '$facebook', '$location','$window'];
 
 
 
     /* @ngInject */
-    function Controller($scope, $facebook, $location, $rootScope) {
+    function Controller($scope, $facebook, $location, $window) {
+        //$window.FB.XFBML.parse();
+        console.log('$window');
+        console.dir($window);
 
-        $rootScope.$on('fb.auth.login',function(){
-          console.log('facebook login');
+        $scope.$on('fb.auth.login',function(){
           $location.path('/page');
         });
 
@@ -35,6 +37,9 @@
           if(resp.status === 'connected'){
             $scope.loggedin = true;
           }
+
+
+
         }, function failed(resp){
           console.dir(resp);
         } );
@@ -45,6 +50,7 @@
           },
           function(err) {
             $scope.welcomeMsg = "Please log in";
+            $window.FB.XFBML.parse();
           });
 
         $facebook.api('/me/accounts').then(
