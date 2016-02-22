@@ -14,6 +14,10 @@
         activate();
 
         function activate() {
+          fb.logout().then(function(resp){
+            
+          });
+          /*
           fb.getLoginStatus().then(function(resp){
             if(resp.status !== 'connected'){
               // go back to root if the loginStatus is not 'connected'
@@ -27,6 +31,7 @@
               });
             }
           });
+          */
 
 
         }

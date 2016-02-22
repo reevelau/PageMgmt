@@ -55,6 +55,7 @@ angular
      $rootScope.$on('fb.auth.logout',function(authResponse){
        console.log('fb.auth.logout, authResponse');
        console.dir(authResponse);
+       $location.path('/');
      });
      $rootScope.$on('fb.edge.create',function(url,ele){
        console.log('fb.edge.create, {url,ele}');

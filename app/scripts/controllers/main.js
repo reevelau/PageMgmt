@@ -11,10 +11,6 @@
 
     /* @ngInject */
     function Controller($scope, $facebook, $location, $window) {
-        //$window.FB.XFBML.parse();
-        console.log('$window');
-        console.dir($window);
-
         $scope.$on('fb.auth.login',function(){
           $location.path('/page');
         });
@@ -32,8 +28,8 @@
         }
 
         $facebook.getLoginStatus().then(function success(resp){
-          console.log('getLoginStatus success');
-          console.dir(resp);
+          //console.log('getLoginStatus success');
+          //console.dir(resp);
           if(resp.status === 'connected'){
             $scope.loggedin = true;
           }
@@ -50,7 +46,7 @@
           },
           function(err) {
             $scope.welcomeMsg = "Please log in";
-            $window.FB.XFBML.parse();
+            $window.FB.XFBML.parse(); // this is current a hack. Find another better location to parse XFBML
           });
 
         $facebook.api('/me/accounts').then(
